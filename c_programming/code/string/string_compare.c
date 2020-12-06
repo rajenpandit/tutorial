@@ -1,4 +1,5 @@
-#include  <stdio.h>
+#include <stdio.h>
+#include <string.h>
 
 int string_compare(char* p1, char* p2)
 {
@@ -25,7 +26,8 @@ int main()
     printf("Enter name1 and name2:");
     scanf("%s",name1);
     scanf("%s",name2);
-    int retVal = string_compare(name1, name2) ;
+    // int retVal = string_compare(name1, name2) ;
+    int retVal = strcmp(name1, name2) ;
     if(retVal == 0)
     {
         printf("name1 and name2 are equal\n");
