@@ -1,5 +1,14 @@
 #include <stdio.h>
 #include <string.h>
+
+void string_concat(char *dst, char* src)
+{
+    while(*dst != '\0')
+    {
+        dst++;
+    }
+    strcpy(dst,src);
+}
 int main()
 {
     char firstName[20];
@@ -12,10 +21,8 @@ int main()
     scanf("%s",lastName);
 
     strcpy(fullName, firstName);
-    fullName[strlen(firstName)] = ' ';
-    //*(fullName + strlen(firstName)) = ' ';
-    //strcpy(fullName + strlen(firstName)," ");
-    strcpy(fullName + strlen(firstName)+1, lastName);
+    strcat(fullName, " ");
+    strcat(fullName, lastName);
     printf("Full Name: %s\n", fullName);
 
 }
