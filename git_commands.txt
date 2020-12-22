@@ -1,0 +1,2 @@
+Command to show latest changes, list all files.
+$ git show --stat --oneline HEAD
