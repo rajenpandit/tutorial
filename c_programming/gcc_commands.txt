@@ -1,0 +1,10 @@
+Run Preprocessor on a file [ex: test.c]
+ $ gcc -E test.c -o out.c
+
+Compile a source file [ex: test.c, main.c]
+ $ gcc -c test.c 
+ $ gcc -c main.c 
+
+Link object files to create executable [ex: test.o, main.o]
+ $ gcc main.o test.o -o project.exe 
+
