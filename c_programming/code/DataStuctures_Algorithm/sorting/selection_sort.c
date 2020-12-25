@@ -6,6 +6,26 @@ void swap(int* a, int* b)
     *a = *b;
     *b = temp;
 }
+
+void sort_recursion(int* const ptr, const int size)
+{
+    int* pos = ptr;
+    int* min = pos;
+    int* max = pos;
+    int* end_ptr = ptr + size;
+    while(max < end_ptr)
+    {
+        if(*max < *min)
+        {
+            min = max;
+        }
+        max++;
+    }
+    swap(pos, min);
+    if(size > 1)
+        sort_recursion(ptr+1, size-1);
+}
+
 /**
  *  Select one element from array and find smaller value from rest of the array elements.
  *  Swap smaller value with the current.
@@ -45,6 +65,6 @@ int main()
 {
     int arr[]={4,6,2,3,8,9,0,27,45,5};
     const int numberOfElements = sizeof(arr)/sizeof(int);
-    sort(arr, numberOfElements);
+    sort_recursion(arr, numberOfElements);
     display(arr, numberOfElements);
 }
