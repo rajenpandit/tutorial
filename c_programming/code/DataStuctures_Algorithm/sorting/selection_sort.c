@@ -11,7 +11,7 @@ void sort_recursion(int* const ptr, const int size)
 {
     int* pos = ptr;
     int* min = pos;
-    int* max = pos;
+    int* max = pos+1;
     int* end_ptr = ptr + size;
     while(max < end_ptr)
     {
