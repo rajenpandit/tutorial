@@ -1,0 +1,24 @@
+1. Compile using -g flag to enable debugging. Ex:
+    $ gcc -g main.c -o main.exe
+2. rung executable using gdb. Ex: 
+    $ gdb main.exe
+
+* Setting up breakpoint using line number
+    b <file_name>:<line_number> [ ex: b main.c:5 ]
+* Setting up breakpoint using function name
+    b <function_name> [ex: b main ]
+
+* Print value of a variable
+    p <var_name>    [ex: p name ]
+* Print address of a variable 
+    p <&var_name>   [ ex: p &var_name ]
+
+* Running a program from debugger
+    r               [run]
+* Execting a statement
+    n               [next]
+* Going inside a function
+    s               [step-in]
+
+
+* Press Enter to repeat previous command
