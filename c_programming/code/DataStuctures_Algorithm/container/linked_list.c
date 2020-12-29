@@ -43,6 +43,20 @@ void addData(Node** start_p)
     newNode->next = NULL;
 }
 
+void display(const Node* start)
+{
+    const Node* temp = start;
+    printf("========================\n");
+    while(temp != NULL)
+    {
+        printf("-------------------------\n");
+        printf("Name: %s\n", temp->Name);
+        printf("Age: %hd\n", temp->age);
+        temp = temp->next;
+    }
+    printf("========================\n");
+}
+
 int x;
 int *p = &x; // int*
 int** p1 = &p;  //int**
@@ -54,8 +68,9 @@ int main()
     while(1)
     {
         char ch;
-        printf("Press 1 to add data, 2 to exit\n");
-        scanf("%c",&ch);
+        printf("Press 1 to add data, 2 to exit, 3 to print\n");
+        scanf("\n%c",&ch);
+
         switch (ch)
         {
             case '1':
@@ -63,6 +78,8 @@ int main()
                 break;
             case '2':
                 break;
+            case '3':
+                display(start);
             default:
                 printf("Enter a choice\n");
                 break;
@@ -70,5 +87,4 @@ int main()
         if(ch == '2')
             break;
     };
-    createNode(start);
 }
