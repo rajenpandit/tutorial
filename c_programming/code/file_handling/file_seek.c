@@ -3,7 +3,7 @@
 
 int main()
 {
-    FILE *fp = fopen("file1.txt","a+");
+    FILE *fp = fopen("file1.txt","r+");
     if(fp == NULL)
     {
         printf("Couldn't open file\n");
@@ -15,6 +15,7 @@ int main()
         scanf("%s",name);
         if(strcmp(name,"n")==0)
             break;
+        fseek(fp, 5, SEEK_SET);
         fputs("Name:",fp);
         fputs(name, fp);
         fputc('\n',fp);
