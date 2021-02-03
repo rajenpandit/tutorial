@@ -182,33 +182,39 @@ int updateEmployee()
 
 int main(){
     int choice;
-    printf(" 1. Add new\n 2. Modify\n 3. Delete\n 4. Print\n");
-    scanf("%d",&choice);
-    switch (choice)
-    {
-    int index;
-    int n_employee;
-    Employee* emp_p;
-    case 1:
-        printf("Enter index:");
-        scanf("%d",&index);
-        addEmployee(getEmployeeDetails(), index);
-        break;
-    case 2:
-        updateEmployee();
-        break;
-    case 3: 
-        deleteEmployee();
-        break;
-    case 4:
-        emp_p = NULL;
-        n_employee = readEmployeeDetails(&emp_p);
-        printEmployee(emp_p, n_employee);
-        if(emp_p != NULL)
-            free(emp_p);
-    default:
-        break;
+    do{
+        printf(" 1. Add new\n 2. Modify\n 3. Delete\n 4. Print\n");
+        scanf("%d",&choice);
+        switch (choice)
+        {
+        int index;
+        int n_employee;
+        Employee* emp_p;
+        case 1:
+            printf("Enter index:");
+            scanf("%d",&index);
+            addEmployee(getEmployeeDetails(), index);
+            break;
+        case 2:
+            updateEmployee();
+            break;
+        case 3: 
+            deleteEmployee();
+            break;
+        case 4:
+            emp_p = NULL;
+            n_employee = readEmployeeDetails(&emp_p);
+            printEmployee(emp_p, n_employee);
+            if(emp_p != NULL)
+                free(emp_p);
+            break;
+        case 5:
+            break;
+        default:
+            break;
+        }
     }
+    while(choice != 5);
 #if 0 //test
     Employee emp[2] = {
         {1,"Rohan", 100.0, 5.0},
