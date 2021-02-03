@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <stdlib.h>
 
 #define EMPLOYEE_FILE  "Employee.txt"
 
@@ -27,6 +28,7 @@ int writeEmployee(Employee* emp, size_t n_employee)
     fclose(fp);
     return i;
 }
+
 
 int readEmployee(Employee* emp, size_t n_employee)
 {
@@ -57,7 +59,14 @@ int getNumberOfEmployee(){
     }
     return st.st_size/sizeof(Employee);
 }
-
+int readEmployeeDetails(Employee** emp_pp)
+{
+   int n_employee = getNumberOfEmployee();
+   Employee* emp = malloc(sizeof(Employee) * n_employee);
+   readEmployee(emp,n_employee);
+   *emp_pp = emp;
+   return n_employee;
+}
 int printEmployee(Employee emp[], int n_employee){
 
     for(int i=0; i<n_employee; ++i)
@@ -112,24 +121,95 @@ int addEmployee(Employee newEmp, int index){
     return 0;
 }
 
-int main(){
-    #if 0
+int deleteEmployee(){
+    int emp_id;
+    int n_employee = getNumberOfEmployee();
+    if(n_employee <= 0)
+        return -1;
+    Employee emp[n_employee];
+    readEmployee(emp,n_employee);
+    printEmployee(emp, n_employee);
+    printf("Enter ID to delete:");
+    scanf("%d",&emp_id);
+
+    for(int i = emp_id-1; i<n_employee-1; ++i)
+    {
+        emp[i] = emp[i+1];
+    }
+    n_employee -= 1;
+    writeEmployee(emp,n_employee);
+    return 0;
+}
+
+int updateEmployee()
+{
+    int emp_id;
+    int n_employee = getNumberOfEmployee();
+    if(n_employee <= 0)
+        return -1;
+    Employee emp[n_employee];
+    readEmployee(emp,n_employee);
+    printEmployee(emp, n_employee);
+    printf("Enter ID to update:");
+    scanf("%d",&emp_id);
+    if(!(emp_id > 0 && emp_id <= n_employee))
+        return -1;
+    Employee *emp_p = emp + (emp_id -1);
+    printf("1. update salary\n 2. update bonus\n 3. update salary and bonus\n");
     int choice;
-    printf("1. Add new\n 2. Modify\n 3. Delete\n");
     scanf("%d",&choice);
     switch (choice)
     {
     case 1:
-        /* code */
+        printf("Enter new salary:");
+        scanf("%lf",&emp_p->salary);
         break;
     case 2:
+        printf("Enter new bonus:");
+        scanf("%lf",&emp_p->bonus);
         break;
-    case 3: 
+    case 3:
+        printf("Enter new salary:");
+        scanf("%lf",&emp_p->salary);
+        printf("Enter new bonus:");
+        scanf("%lf",&emp_p->bonus);
         break;
     default:
         break;
-    #endif
+    }
+    return writeEmployee(emp,n_employee);
+}
 
+int main(){
+    int choice;
+    printf(" 1. Add new\n 2. Modify\n 3. Delete\n 4. Print\n");
+    scanf("%d",&choice);
+    switch (choice)
+    {
+    int index;
+    int n_employee;
+    Employee* emp_p;
+    case 1:
+        printf("Enter index:");
+        scanf("%d",&index);
+        addEmployee(getEmployeeDetails(), index);
+        break;
+    case 2:
+        updateEmployee();
+        break;
+    case 3: 
+        deleteEmployee();
+        break;
+    case 4:
+        emp_p = NULL;
+        n_employee = readEmployeeDetails(&emp_p);
+        printEmployee(emp_p, n_employee);
+        if(emp_p != NULL)
+            free(emp_p);
+    default:
+        break;
+    }
+#if 0 //test
     Employee emp[2] = {
         {1,"Rohan", 100.0, 5.0},
         {1, "Mohan", 200.0, 10.0}
@@ -149,5 +229,15 @@ int main(){
     Employee emp1[n_emplyee];
     readEmployee(emp1, n_emplyee);
     printEmployee(emp1, n_emplyee);
+#if 0 // delete   
+    deleteEmployee();
+    Employee emp2[n_emplyee-1];
+    readEmployee(emp1,n_emplyee-1);
+    printEmployee(emp1,n_emplyee-1);
+#endif
+    updateEmployee();
+    readEmployee(emp1, n_emplyee);
+    printEmployee(emp1, n_emplyee);
+#endif
     return 0;
 }
