@@ -33,4 +33,12 @@ int main()
     std::cin >> _name;  // cin.operator>> (_name);  // operator >> (cin, _name);
     std::cout << name;
     std::cout << _name;
+    name = "xyz";
+    name.assign("abc");
+    // _name = "xyz";   // _name.operator=("xyz");
+    // _name.assign("xyz");
+    // _name.length();   // retruns lenght of the string.
+    // _name.append("_abc");   // xyz_abc;
+    // _name+="_abc"; // will append/concat _abc with existing string.
+    // _name.compare("xyz_abc");  // return true/false if string is matched.
 }
