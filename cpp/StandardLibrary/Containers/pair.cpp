@@ -64,7 +64,7 @@ int main(){
     }else{
         std::cout << "Couldn't find" << std::endl;
     }
-
+    //for(auto it = m.begin(); it < m.end(); ++it)
     for(auto it : m){
         std::cout << it.first << "|" << it.second << std::endl;
     }
