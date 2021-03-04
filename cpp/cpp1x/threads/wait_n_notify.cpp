@@ -4,25 +4,29 @@
 #include <unistd.h>
 
 std::queue<int> queue;
+std::mutex m;
+std::condition_variable cv;
+
+bool isDataAvailable(){
+    return !queue.empty();
+}
 void print(){
     while(true){
-        if(!queue.empty()){
-            int data = queue.front();
-            queue.pop();
-            std::cout <<"Data: "<< data << std::endl;
-        }
-        else{
-            std::cout <<"Waiting for a second"<< std::endl;
-            sleep(1);
-        }
+        std::unique_lock<std::mutex> lk(m);
+        cv.wait(lk,isDataAvailable);
+        int data = queue.front();
+        queue.pop();
+        std::cout <<"Thread[Print] Data: "<< data << std::endl;
     }
 }
 
 void read1(){
     while(true){
-        for(int i=0; i<50; ++i)
-            queue.push(i); 
-        sleep(1);
+        int data;
+        std::cout<<"Thread[Read1] Enter data:";
+        std::cin >> data;
+        queue.push(data);
+        cv.notify_one();
     }
 }
 
