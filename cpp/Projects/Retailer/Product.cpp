@@ -4,6 +4,7 @@
 
 std::map<unsigned int, std::shared_ptr<Product>> Product::s_productMap;
 unsigned int Product::s_Id = 1000;
+std::string Product::s_ProductsPath = "./products";
 
 Product::Product(const std::string& name, double cost, 
             double sellingPrice, double quantity) :
@@ -16,37 +17,42 @@ Product::Product(const std::string& name, double cost,
 }
 
 //static
+
+void Product::setPath(const std::string& path){
+    s_ProductsPath = path;
+}
 bool Product::load(){
-    std::fstream fs("metadata.txt",fs.in);
+    std::fstream fs(s_ProductsPath + "/metadata.txt",fs.in);
     if(!fs.is_open())
         return false;
-    unsigned int productId;
-    fs >> productId;
+    fs >> s_Id;
     fs.close();
     unsigned int pId;
     std::string pName;
     double pCost;
     double pSellingPrice;
     unsigned int id = 1000;
-    while(id <= productId){
+    while(id <= s_Id){
         id++;
         std::string fileName = std::to_string(id) + ".txt";
-        fs.open(fileName, fs.in);
-        fs >> pId 
-            >> pName 
-            >> pCost
-            >> pSellingPrice;
-        std::shared_ptr<Product> product(new Product(pName,pCost,pSellingPrice));
-        product->m_id = pId;
-        s_productMap.emplace(pId,product);
-        fs.close();
+        fs.open(s_ProductsPath+"/"+fileName, fs.in);
+        if(fs.is_open())
+        {
+            fs >> pId 
+                >> pName 
+                >> pCost
+                >> pSellingPrice;
+            std::shared_ptr<Product> product(new Product(pName,pCost,pSellingPrice));
+            product->m_id = pId;
+            s_productMap.emplace(pId,product);
+            fs.close();
+        }
     }
-    s_Id = id;
     return true;
 }
 bool Product::unload()
 {
-    std::fstream fs("metadata.txt",fs.out);
+    std::fstream fs(s_ProductsPath + "/metadata.txt",fs.out);
     if(!fs.is_open())
         return false;
     fs << s_Id;
@@ -54,7 +60,7 @@ bool Product::unload()
 
     for(auto p : s_productMap){
         std::string fileName = std::to_string(p.first) + ".txt";
-        fs.open(fileName, fs.out);
+        fs.open(s_ProductsPath + "/" + fileName, fs.out);
         auto product = p.second;
         fs << product->m_id
             << " " << product->m_name

@@ -11,6 +11,7 @@ public:
     Product(const std::string& name, double cost, double sellingPrice, double m_quantity=0);
 public:
     //static
+    static void setPath(const std::string& path);
     static bool load();
     static bool unload();
     static bool addProduct(std::shared_ptr<Product> product);
@@ -24,6 +25,7 @@ private:
 
     //static
     static unsigned int s_Id;
+    static std::string s_ProductsPath;
     static std::map<unsigned int, std::shared_ptr<Product>> s_productMap;
 
     //friend
