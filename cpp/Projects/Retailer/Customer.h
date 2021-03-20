@@ -25,5 +25,7 @@ private:
     std::string m_phoneNumber;
     std::string m_name;
     std::string m_address;
+
+    friend std::ostream& operator << (std::ostream& os, const Customer& customer);
 };
 #endif

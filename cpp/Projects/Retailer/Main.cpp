@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include "Product.h"
+#include "Customer.h"
 
 void print(std::shared_ptr<Product> product){
     static std::fstream fs;
@@ -31,7 +32,22 @@ void testProduct(bool addProduct=false){
     Product::unload();
 }
 
+
+void testCustomer(){
+    std::shared_ptr<Customer> customer(new Customer("9012345678", "Rahul", "Jamtara"));
+    Customer::addCustomer(customer);
+
+    //get customer
+    std::shared_ptr<Customer> ptr  = Customer::getCustomer("9012345678");
+    if(ptr == nullptr)
+        std::cout << "Customer doesn't exist" << std::endl;
+    else
+        std::cout << *ptr << std::endl;
+}
+
 #define TEST_PRODUCT 0
+#define TEST_CUSTOMER 1
+
 
 int main(int argc, char** argv){
 
@@ -40,6 +56,10 @@ int main(int argc, char** argv){
     if(argc > 1 && std::string(argv[1]) == "-addProduct")
         addProduct = true;
     testProduct(addProduct);
+#endif
+
+#if TEST_CUSTOMER == 1
+    testCustomer();
 #endif
 
 
